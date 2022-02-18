@@ -1,5 +1,6 @@
 import React from 'react';
 import styled,{createGlobalStyle} from 'styled-components';
+import Chat from './components/Chat';
 
 const ResetStyle= createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -57,13 +58,15 @@ const BaseStyle = createGlobalStyle`
         --cinza: #161b22;
         --cinza-claro: #21262d;
         --font-color: #c9d1d9;
+        --bgcolor: #121212;
     }  
 
     body {
-      background-color: #121212;
+      font-family: "Roboto";
+      background-color: var(--bgcolor);
+      overflow-x: hidden;
     }
 `;
-
 
 const AppContainer = styled.div`
   display: flex;
@@ -79,6 +82,7 @@ function App() {
   <AppContainer>
     <ResetStyle/>
     <BaseStyle/>
+    <Chat/>
   </AppContainer>
   );
 }
