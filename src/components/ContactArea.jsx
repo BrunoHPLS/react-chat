@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 const ContactArea = styled.div`
   box-sizing: border-box;
@@ -89,16 +83,73 @@ const ContactsDiv = styled.div`
     }
 
 `;
-const Contact = styled(ListItem)`
+const ContactsList = styled.ul`
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    width: 100%;
+    background-color: transparent;
+`
+const Contact = styled.li`
+    height: 6vh;
+    padding: 2vh 2vw;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.1vh solid var(--cinza);
 
     &:hover{
       transform: scale(1.04);
       background-color: var(--selected-color);
     }
 `;
+const ContactUserDiv = styled.div`
+    display: grid;
+    grid-template-areas: 
+    "avatar name"
+    "avatar status";
+    align-items: center;
+    column-gap: 1vw;
+`
+const ContactAvatar = styled.div`
+    grid-area: avatar; 
+    width: 2.7vw;
+    height: 2.7vw;
+    border-radius: 100%;
+    background-color: var(--cinza);
+    background-image: url("https://github.com/${props=>props.image}.png");
+    background-size: cover;
+`
+const ContactTxt = styled.h4`
+    grid-area: ${props=>props.area};
+    ${props=> (props.area === "name")? 
+    "font-size: 1vw; letter-spacing: 0.1vw;" : 
+    "font-size: 0.8vw; color: var(--font-color); opacity: 0.5;"}
+`
+const ContactBtnDiv = styled.div`
+    display: flex;
+    gap: 1vw;
+    align-items: center;
+`
+const ContactActionBtn = styled.button`
+    cursor: pointer;
+    color: var(--font-color);
+    transition: all 0.3s ease-in-out;
+    
+    width: 2vw;
+    height: 2vw;
+    border-radius: 100%;
+    background-color: var(--cinza-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    &:hover{
+      background-color: var(--cinza);
+    }
+`
 const ContactsManager = styled.div`
     height: 7vh;
     display: flex;
@@ -120,7 +171,7 @@ const ContactsActionBtn = styled.button`
     justify-content: center;
     gap: 1vw;
 
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     &:hover{
       background-color: #072440;
@@ -149,41 +200,22 @@ function Contacts() {
             <SearchContactButton type="submit"><SearchIcon sx={{fontSize: '1.5vw'}}/></SearchContactButton>
         </SearchContactArea>
         <ContactsDiv>
-          <List sx={{ width: '100%', bgcolor: 'transparent', padding: '0px'}}>
-            <Contact sx={{height: 'auto', padding: '0.3vw 0.7vw'}}>
-              <ListItemAvatar sx={{padding: '0.7vw', maxWidth: '3.4vw',minWidth: '3.4vw'}}>
-                <Avatar sx={{width: '2.7vw', height: '2.7vw'}}>
-                  <img src="https://github.com/BrunoHPLS.png" alt="foto de perfil" width="100%"/>
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography 
-                  sx={{fontSize: '1vw', letterSpacing: '0.1vw'}}
-                  component="h4"
-                  >
-                    Bruno
-                  </Typography>
-                </React.Fragment>
-              } 
-              secondary={
-                <React.Fragment>
-                  <Typography 
-                  sx={{fontSize: '0.8vw', color: 'var(--font-color)', opacity: '0.5'}}
-                  component="span"
-                  >
-                    online
-                  </Typography>
-                </React.Fragment>
-              } />
-            </Contact>        
-          </List>
+          <ContactsList>
+            <Contact>
+              <ContactUserDiv>
+                <ContactAvatar image="BrunoHPLS"></ContactAvatar>
+                <ContactTxt area="name">Bruno</ContactTxt>
+                <ContactTxt area="status">online</ContactTxt>
+              </ContactUserDiv>
+              <ContactBtnDiv>
+                <ContactActionBtn><EditIcon sx={{fontSize: '1.3vw'}}/></ContactActionBtn>
+                <ContactActionBtn><DeleteIcon sx={{fontSize: '1.3vw'}}/></ContactActionBtn>
+              </ContactBtnDiv>
+            </Contact>      
+          </ContactsList>
         </ContactsDiv>
         <ContactsManager>
-            <ContactsActionBtn><AddCircleIcon sx={{fontSize: '1.5vw'}}/>Add</ContactsActionBtn>
-            <ContactsActionBtn><EditIcon sx={{fontSize: '1.5vw'}}/>Edit</ContactsActionBtn>
-            <ContactsActionBtn><DeleteIcon sx={{fontSize: '1.5vw'}}/>Delete</ContactsActionBtn>
+            <ContactsActionBtn><AddBoxIcon sx={{fontSize: '1.5vw'}}/>Adicionar novo contato</ContactsActionBtn>
         </ContactsManager>
     </ContactArea>
   );

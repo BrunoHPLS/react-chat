@@ -59,10 +59,7 @@ const BaseStyle = createGlobalStyle`
         --cinza-claro: #21262d;
         --font-color: #c9d1d9;
         --bgcolor: #121212;
-        --selected-color: #202020;
-        --vermelho: #ff4e45;
-        --verde: #238636;
-        --amarelo: #3b9bec;
+        --selected-color: #303030;
         --azul: #0a1929;
     }  
 
