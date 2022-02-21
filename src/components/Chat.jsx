@@ -12,7 +12,7 @@ const ChatContainer = styled.div`
     box-sizing: border-box;
 
     display: grid;
-    grid-template-columns: 700px 300px;
+    grid-template-columns: 70% 30%;
 `
 
 const ChatArea = styled.div`

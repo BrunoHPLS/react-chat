@@ -59,6 +59,7 @@ const BaseStyle = createGlobalStyle`
         --cinza-claro: #21262d;
         --font-color: #c9d1d9;
         --bgcolor: #121212;
+        --selected-color: #202020;
     }  
 
     body {
