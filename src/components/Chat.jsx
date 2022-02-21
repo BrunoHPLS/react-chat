@@ -4,8 +4,8 @@ import Contacts from './ContactArea';
 
 const ChatContainer = styled.div`
     background-color: var(--preto);
-    width: 1000px;
-    height: 600px;
+    width: 80vw;
+    height: 96vh;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0px 4px 8px 0px black;
