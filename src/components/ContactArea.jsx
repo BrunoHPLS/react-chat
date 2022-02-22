@@ -12,7 +12,7 @@ const ContactArea = styled.div`
   flex-direction: column;
   gap: 1vw;
 `
-const SearchContactArea = styled.form`
+const SearchContactArea = styled.div`
   height: 7vh;
   box-sizing: border-box;
   overflow: hidden;
@@ -125,7 +125,7 @@ const ContactAvatar = styled.div`
 const ContactTxt = styled.h4`
     grid-area: ${props=>props.area};
     ${props=> (props.area === "name")? 
-    "font-size: 1vw; letter-spacing: 0.1vw;" : 
+    "font-size: 1vw; letter-spacing: 0.1vw; max-width: 6.5vw;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;" : 
     "font-size: 0.8vw; color: var(--font-color); opacity: 0.5;"}
 `
 const ContactBtnDiv = styled.div`
@@ -181,11 +181,54 @@ const ContactsActionBtn = styled.button`
 
 function Contacts() {
 
-    const [contatos, setContatos] = useState();
+    const realContatos = [
+      {
+        nome: "Bruno",
+        github: "BrunoHPLS",
+        status: "online"
+      },
+      {
+        nome: "Pedro Melém",
+        github: "MrMelem",
+        status: "online"
+      },
+      {
+        nome: "Elton Souza",
+        github: "Elton-Souza",
+        status: "offline"
+      },
+      { 
+        nome: "Luiz",
+        github: "Luiz",
+        status: "online"
+      },
+      {
+        nome: "Pedro Lucas Correa",
+        github: "PedroLucas-Correa",
+        status: "offline"
+      },
+      {
+        nome: "Alessandro Oliveira",
+        github: "AlessandroOliiveira",
+        status: "online"
+      },
+      {
+        nome: "Marcelo Sales",
+        github: "MarceloSales1",
+        status: "online"
+      },
+      {
+        nome: "Meta",
+        github: "Meta",
+        status: "offline"
+      }
+    ];
+
+    const [contatos, setContatos] = useState(realContatos);
 
   return (
     <ContactArea>
-        <SearchContactArea onSubmit={(event)=>{event.preventDefault();}}
+        <SearchContactArea 
         onFocus={(event)=>{
           event.target.parentNode.classList.add('active');
           event.target.parentNode.children[0].classList.add('active');
@@ -196,22 +239,34 @@ function Contacts() {
           event.target.parentNode.children[0].classList.remove('active');
           event.target.parentNode.children[1].classList.remove('active');
           }}>
-            <SearchContactInput type="text"placeholder="Pesquise um contato"></SearchContactInput>
+            <SearchContactInput 
+            name="contato" type="text"placeholder="Pesquise um contato" autoComplete="off"
+            onChange={(event)=>{
+              const contatoAtual = event.target.value;
+              const newList = realContatos.filter( contato => contato.nome.includes(contatoAtual));
+              setContatos(newList);
+            }}></SearchContactInput>
             <SearchContactButton type="submit"><SearchIcon sx={{fontSize: '1.5vw'}}/></SearchContactButton>
         </SearchContactArea>
         <ContactsDiv>
           <ContactsList>
-            <Contact>
-              <ContactUserDiv>
-                <ContactAvatar image="BrunoHPLS"></ContactAvatar>
-                <ContactTxt area="name">Bruno</ContactTxt>
-                <ContactTxt area="status">online</ContactTxt>
-              </ContactUserDiv>
-              <ContactBtnDiv>
-                <ContactActionBtn><EditIcon sx={{fontSize: '1.3vw'}}/></ContactActionBtn>
-                <ContactActionBtn><DeleteIcon sx={{fontSize: '1.3vw'}}/></ContactActionBtn>
-              </ContactBtnDiv>
-            </Contact>      
+            {
+              contatos.map((element,index)=>{
+                return (
+                <Contact key={index} title={element.nome+" - "+element.github}>
+                  <ContactUserDiv>
+                    <ContactAvatar image={element.github}></ContactAvatar>
+                    <ContactTxt area="name">{element.nome}</ContactTxt>
+                    <ContactTxt area="status">{element.status}</ContactTxt>
+                </ContactUserDiv>
+                <ContactBtnDiv>
+                  <ContactActionBtn><EditIcon sx={{fontSize: '1.3vw'}}/></ContactActionBtn>
+                  <ContactActionBtn><DeleteIcon sx={{fontSize: '1.3vw'}}/></ContactActionBtn>
+                </ContactBtnDiv>
+                </Contact>
+                );
+              })
+            }     
           </ContactsList>
         </ContactsDiv>
         <ContactsManager>
